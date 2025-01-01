@@ -34,6 +34,8 @@ authRouter.post("/signup", async (req, res) => {
 });
 
 authRouter.post("/login", async (req, res) => {
+  
+  
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
@@ -58,6 +60,8 @@ authRouter.post("/login", async (req, res) => {
 });
 
 authRouter.post("/logout", async (req, res) => {
+  
+  
   try {
     res.clearCookie("token");
     return res.status(200).send("User is logged out");

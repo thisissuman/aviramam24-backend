@@ -4,17 +4,15 @@ import User from "../models/usermodel.js";
 export const userAuth = async (req, res, next) => {
   try {
     // read token from cookies
-    
 
     const token = req.cookies.token;
-    
+
     if (!token) {
       return res
         .status(401)
         .json({ error: "Unauthorized, token not provided" });
     }
     const decoded = await jwt.verify(token, "secretkey");
-    
 
     const user = await User.findOne({ email: decoded.email });
 
