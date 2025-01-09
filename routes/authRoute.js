@@ -25,17 +25,19 @@ authRouter.post("/signup", async (req, res) => {
 
     const userinstance = new User(req.body);
 
-    await userinstance.save();
+    const saveduser = await userinstance.save();
+    const token = await userinstance.getJWT();
 
-    res.send("Your are successfully signedup");
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 86400000),
+    });
+    res.json({ message: "User created successfully", data: saveduser });
   } catch (error) {
     res.status(400).send(error.message + "This is the one");
   }
 });
 
 authRouter.post("/login", async (req, res) => {
-  
-  
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
@@ -60,8 +62,6 @@ authRouter.post("/login", async (req, res) => {
 });
 
 authRouter.post("/logout", async (req, res) => {
-  
-  
   try {
     res.clearCookie("token");
     return res.status(200).send("User is logged out");
