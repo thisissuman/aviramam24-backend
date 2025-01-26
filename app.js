@@ -24,8 +24,8 @@ app.use("/", profileRouter);
 connectDB()
   .then(() => {
     console.log("DB Connected successfully");
-    app.listen(3000, () => {
-      console.log("App is running on 3000 port");
+    app.listen(7777, () => {
+      console.log("App is running on 7777 port");
     });
   })
   .catch(() => {
